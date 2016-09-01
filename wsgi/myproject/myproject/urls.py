@@ -15,12 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from django.http import HttpResponse
-
-def index(request):
-  return HttpResponse('Hello World')
+import myproject.views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', index),
+    url(r'^$', myproject.views.index),
+    url(r'^get_compositions/$', myproject.views.get_compositions, name='get_compositions'),
 ]
