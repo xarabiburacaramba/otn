@@ -20,9 +20,7 @@ connection=psycopg2.connect("dbname=otn user=adminphaewqf password=dSeAnnfTss-R 
 
 def get_compositions(request):
     cursor=connection.cursor()
-    c=[]
-    cursor.execute("select name from map_compositions")
-    for rec in cursor:
-      c.append(rec[0])
+    cursor.execute("select array_to_json(array_agg(map_compositions)) from map_compositions")
+    c=cursor.fetchone()
     return JsonResponse(c, safe=False) 
     cursor.close()
