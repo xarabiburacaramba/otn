@@ -21,4 +21,5 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', myproject.views.index),
     url(r'^get_compositions/$', myproject.views.get_compositions, name='get_compositions'),
+    url(r'^get_layers/(?P<composition_id>.*)/$', myproject.views.get_layers, name='get_layers'),
 ]

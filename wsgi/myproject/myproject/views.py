@@ -21,6 +21,14 @@ connection=psycopg2.connect("dbname=otn user=adminphaewqf password=dSeAnnfTss-R 
 def get_compositions(request):
     cursor=connection.cursor()
     cursor.execute("select array_to_json(array_agg(map_compositions)) from map_compositions")
-    c=cursor.fetchone()
+    c=cursor.fetchone()[0]
     return JsonResponse(c, safe=False) 
+    cursor.close()
+    
+    
+def find_museum(request, route_id):
+    cursor=connection.cursor()
+    cursor.execute("SELECT array_to_json(array_agg(t)) FROM (select a.*, b.layer_order from map_layers a, compositions_layers b where a.layer_id=b.layer_id and b.composition_id='%s' order by layer_order asc) t" %composition_id)
+    d=cursor.fetchone()[0]
+    return JsonResponse(d, safe=False) 
     cursor.close()
