@@ -26,7 +26,7 @@ def get_compositions(request):
     cursor.close()
     
     
-def find_museum(request, route_id):
+def get_layers(request, composition_id):
     cursor=connection.cursor()
     cursor.execute("SELECT array_to_json(array_agg(t)) FROM (select a.*, b.layer_order from map_layers a, compositions_layers b where a.layer_id=b.layer_id and b.composition_id='%s' order by layer_order asc) t" %composition_id)
     d=cursor.fetchone()[0]
