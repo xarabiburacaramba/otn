@@ -33,9 +33,16 @@ def get_layers(request, composition_id):
     return JsonResponse(d, safe=False) 
     cursor.close()
     
-def get_news(request, time_period='24'):
+def get_news(request, time_period):
     cursor=connection.cursor()
     cursor.execute("SELECT array_to_json(array_agg(t)) FROM (SELECT * from news where the_time between (now() - interval '%s hours') and now() order by the_time desc) t" %time_period)
     e=cursor.fetchone()[0]
     return JsonResponse(e, safe=False) 
+    cursor.close()
+    
+def get_all_news(request):
+    cursor=connection.cursor()
+    cursor.execute("SELECT array_to_json(array_agg(t)) FROM (SELECT * from news order by the_time desc) t")
+    f=cursor.fetchone()[0]
+    return JsonResponse(f, safe=False) 
     cursor.close()
