@@ -58,14 +58,8 @@ def get_folder_date(request):
     time_modified = {'time':('%s' % os.path.getmtime(folder_path) )}
     return JsonResponse(time_modified, safe=False)
     
-def get_folder_content(request):
-    filename = 'content.zip'
-    chunk_size = 8192
-    response = StreamingHttpResponse(FileWrapper(zip_paths(os.path.join(myproject.settings.STATIC_ROOT, 'helpapp')).read(),chunk_size), content_type='application/zip')    
-    response['Content-Disposition'] = 'attachment; filename=%s' % filename
-    return response
-    
-    
+def get_folder_content(request):  
+    response = StreamingHttpResponse(zip_paths(os.path.join(myproject.settings.STATIC_ROOT, 'helpapp')).read(), content_type='application/octet-stream')
     response['Content-Disposition'] = 'attachment; filename={}'.format("%s" % ('content.zip'))
     return response
            
