@@ -3,6 +3,7 @@ from django import forms
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.core.exceptions import ValidationError
 from django.http import StreamingHttpResponse
+from django.core.servers.basehttp import FileWrapper
 from django.http import JsonResponse
 from django.shortcuts import render
 
