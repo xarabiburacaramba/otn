@@ -15,8 +15,6 @@ import mimetypes
 import json
 import zipfile
 
-import StringIO
-
 import myproject.settings
 
 
