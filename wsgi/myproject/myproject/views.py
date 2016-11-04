@@ -12,6 +12,8 @@ import psycopg2
 import mimetypes
 import json
 
+import myproject.settings
+
 
 def index(request):
   return HttpResponse('Hello World')
@@ -48,6 +50,6 @@ def get_all_news(request):
     cursor.close()
     
 def get_folder_date(request):
-    folder_path = os.path.join(settings.STATIC_ROOT, 'helpapp')
+    folder_path = os.path.join(myproject.settings.STATIC_ROOT, 'helpapp')
     time_modified = {'time':('%s' % os.path.getmtime(folder_path) )}
     return JsonResponse(time_modified, safe=False)
