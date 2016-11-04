@@ -25,5 +25,5 @@ urlpatterns = [
     url(r'^get_news/(?P<time_period>[0-9]+(\.[0-9][0-9]?)?)/$', myproject.views.get_news, name='get_news'),
     url(r'^get_news/$', myproject.views.get_all_news, name='get_all_news'),
     url(r'^get_content_date/$', myproject.views.get_folder_date, name='get_folder_date'),
-    url(r'^get_content/$', folder_export, name='folder_export'),
+    url(r'^get_content/$', myproject.views.get_folder_content, name='get_folder_content'),
 ]
