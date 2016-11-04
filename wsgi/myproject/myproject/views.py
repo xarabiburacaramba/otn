@@ -46,3 +46,8 @@ def get_all_news(request):
     f=cursor.fetchone()[0]
     return JsonResponse(f, safe=False) 
     cursor.close()
+    
+def get_folder_date(request):
+    folder_path = os.path.join(settings.STATIC_ROOT, 'helpapp')
+    time_modified = {'time':('%s' % os.path.getmtime(folder_path) )}
+    return JsonResponse(time_modified, safe=False)
