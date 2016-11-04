@@ -61,7 +61,7 @@ def get_folder_date(request):
 def get_folder_content(request):
     filename = 'content.zip'
     chunk_size = 8192
-    response = StreamingHttpResponse(FileWrapper(zip_paths('./helpapp').read(),chunk_size),content_type='application/zip')
+    response = StreamingHttpResponse(FileWrapper(zip_paths(os.path.join(myproject.settings.STATIC_ROOT, 'helpapp')).read(),chunk_size),content_type='application/zip')
     response['Content-Disposition'] = 'attachment; filename=%s' % filename
     return response
            
