@@ -2,7 +2,7 @@ from django.conf.urls import url
 from django import forms
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.core.exceptions import ValidationError
-from django.http import StreamingHttpResponse
+#from django.http import StreamingHttpResponse
 from django.core.servers.basehttp import FileWrapper
 from django.http import JsonResponse
 from django.shortcuts import render
@@ -59,7 +59,7 @@ def get_folder_date(request):
     return JsonResponse(time_modified, safe=False)
     
 def get_folder_content(request):  
-    response = StreamingHttpResponse(zip_paths(os.path.join(myproject.settings.STATIC_ROOT, 'helpapp')).getvalue(), content_type='application/octet-stream')
+    response = HttpResponse(zip_paths(os.path.join(myproject.settings.STATIC_ROOT, 'helpapp')).getvalue(), content_type='application/zip')
     response['Content-Disposition'] = 'attachment; filename={}'.format("%s" % ('content.zip'))
     return response
            
