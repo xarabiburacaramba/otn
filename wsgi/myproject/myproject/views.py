@@ -26,7 +26,7 @@ connection=psycopg2.connect("dbname=otn user=adminphaewqf password=dSeAnnfTss-R 
 
 
 def get_compositions(request):
-    if request.GET.get('language')=='cz':
+    if request.GET.get('language')=='cs':
       cursor=connection.cursor()
       cursor.execute("select array_to_json(array_agg(t)) from (select composition_id, name__cz as name, description__cz as description, custom_attributes__cz as custom_attributes from map_compositions) t")
       c=cursor.fetchone()[0]
@@ -41,7 +41,7 @@ def get_compositions(request):
     
     
 def get_layers(request, composition_id):
-    if request.GET.get('language')=='cz':
+    if request.GET.get('language')=='cs':
       cursor=connection.cursor()
       cursor.execute("SELECT array_to_json(array_agg(t)) FROM (select a.*, b.layer_order from (select layer_id, name__cz as name, description__cz as description, wms_url__cz as wms_url, wms_layer_name__cz as wms_layer_name, custom_attributes__cz as custom_attributes from map_layers) a, compositions_layers b where a.layer_id=b.layer_id and b.composition_id='%s' order by layer_order asc) t" %composition_id)
       d=cursor.fetchone()[0]
@@ -55,7 +55,7 @@ def get_layers(request, composition_id):
       cursor.close()
            
 def get_news(request, time_period):
-    if request.GET.get('language')=='cz':
+    if request.GET.get('language')=='cs':
       cursor=connection.cursor()
       cursor.execute("SELECT array_to_json(array_agg(t)) FROM (SELECT news_id, category, the_time, geom, title__cz as title, content__cz as content, custom_attributes__cz as custom_attributes from news where the_time between (now() - interval '%s hours') and now() order by the_time desc) t" %time_period)
       e=cursor.fetchone()[0]
@@ -69,7 +69,7 @@ def get_news(request, time_period):
       cursor.close()
     
 def get_all_news(request):
-    if request.GET.get('language')=='cz':
+    if request.GET.get('language')=='cs':
       cursor=connection.cursor()
       cursor.execute("SELECT array_to_json(array_agg(t)) FROM (SELECT news_id, category, the_time, geom, title__cz as title, content__cz as content, custom_attributes__cz as custom_attributes from news order by the_time desc) t")
       f=cursor.fetchone()[0]
