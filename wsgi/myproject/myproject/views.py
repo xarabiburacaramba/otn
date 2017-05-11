@@ -25,6 +25,15 @@ def index(request):
 connection=psycopg2.connect("dbname=otn user=adminphaewqf password=dSeAnnfTss-R host=127.7.14.2 port=5432")
 
 
+def get_roadworks(request):
+    cursor=connection.cursor()
+    cursor.execute("select array_to_json(array_agg(t)) from (select id,name,location,description,detour,dates from roadworks) t")
+    c=cursor.fetchone()[0]
+    return JsonResponse(c, safe=False) 
+    cursor.close()
+
+      
+      
 def get_compositions(request):
     if request.GET.get('language')=='cs':
       cursor=connection.cursor()
