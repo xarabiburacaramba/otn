@@ -27,7 +27,7 @@ connection=psycopg2.connect("dbname=otn user=adminphaewqf password=dSeAnnfTss-R 
 
 def get_roadworks(request):
     cursor=connection.cursor()
-    cursor.execute("select array_to_json(array_agg(t)) from (select id,name,location,description,detour,dates from roadworks) t")
+    cursor.execute("select array_to_json(array_agg(t)) from (select id,name,location,description,detour,dates,st_asgeojson(geom)::json as geom from roadworks) t")
     c=cursor.fetchone()[0]
     return JsonResponse(c, safe=False) 
     cursor.close()
