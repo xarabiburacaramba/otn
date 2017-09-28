@@ -27,7 +27,7 @@ connection=psycopg2.connect("dbname=otn user=adminphaewqf password=dSeAnnfTss-R 
 
 def get_roadworks(request):
     cursor=connection.cursor()
-    cursor.execute("select array_to_json(array_agg(t)) from (select id,name,location,description,detour,array_date_string_format(dates,'DD.MM.YYYY') as dates,st_asgeojson(geom)::json as geom from roadworks) t")
+    cursor.execute("select array_to_json(array_agg(t)) from (select id,name,location,description,detour,array_date_string_format(dates,'DD.MM.YYYY') as dates,geom_json as geom from roadworks) t")
     c=cursor.fetchone()[0]
     return JsonResponse(c, safe=False) 
     cursor.close()
@@ -66,13 +66,13 @@ def get_layers(request, composition_id):
 def get_news(request, time_period):
     if request.GET.get('language')=='cs':
       cursor=connection.cursor()
-      cursor.execute("SELECT array_to_json(array_agg(t)) FROM (SELECT news_id, category, the_time, geom, title__cz as title, content__cz as content, custom_attributes__cz as custom_attributes from news where the_time between (now() - interval '%s hours') and now() order by the_time desc) t" %time_period)
+      cursor.execute("SELECT array_to_json(array_agg(t)) FROM (SELECT news_id, category, the_time, geom_json as geom, title__cz as title, content__cz as content, custom_attributes__cz as custom_attributes from news where the_time between (now() - interval '%s hours') and now() order by the_time desc) t" %time_period)
       e=cursor.fetchone()[0]
       return JsonResponse(e, safe=False) 
       cursor.close()
     else:
       cursor=connection.cursor()
-      cursor.execute("SELECT array_to_json(array_agg(t)) FROM (SELECT news_id, category, the_time, geom, title, content, custom_attributes from news where the_time between (now() - interval '%s hours') and now() order by the_time desc) t" %time_period)
+      cursor.execute("SELECT array_to_json(array_agg(t)) FROM (SELECT news_id, category, the_time, geom_json as geom, title, content, custom_attributes from news where the_time between (now() - interval '%s hours') and now() order by the_time desc) t" %time_period)
       e=cursor.fetchone()[0]
       return JsonResponse(e, safe=False) 
       cursor.close()
@@ -80,13 +80,13 @@ def get_news(request, time_period):
 def get_all_news(request):
     if request.GET.get('language')=='cs':
       cursor=connection.cursor()
-      cursor.execute("SELECT array_to_json(array_agg(t)) FROM (SELECT news_id, category, the_time, geom, title__cz as title, content__cz as content, custom_attributes__cz as custom_attributes from news order by the_time desc) t")
+      cursor.execute("SELECT array_to_json(array_agg(t)) FROM (SELECT news_id, category, the_time, geom_json as geom, title__cz as title, content__cz as content, custom_attributes__cz as custom_attributes from news order by the_time desc) t")
       f=cursor.fetchone()[0]
       return JsonResponse(f, safe=False) 
       cursor.close()
     else:
       cursor=connection.cursor()
-      cursor.execute("SELECT array_to_json(array_agg(t)) FROM (SELECT news_id, category, the_time, geom, title, content, custom_attributes from news order by the_time desc) t")
+      cursor.execute("SELECT array_to_json(array_agg(t)) FROM (SELECT news_id, category, the_time, geom_json as geom, title, content, custom_attributes from news order by the_time desc) t")
       f=cursor.fetchone()[0]
       return JsonResponse(f, safe=False) 
       cursor.close()
