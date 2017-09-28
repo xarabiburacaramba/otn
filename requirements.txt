@@ -1,0 +1,5 @@
+psycopg2
+mimetypes
+json
+zipfile
+django==1.8.4
