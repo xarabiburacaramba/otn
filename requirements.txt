@@ -1,4 +1,3 @@
 psycopg2
-json
 zipfile
 django==1.8.4
